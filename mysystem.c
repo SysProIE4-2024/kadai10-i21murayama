@@ -19,7 +19,6 @@ int mysystem(char *command) {
 
   int pid;
   if ((pid=fork()) < 0) {
-    perror(command);
     return -1;
   }
 
