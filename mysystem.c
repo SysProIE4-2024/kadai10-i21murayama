@@ -8,14 +8,12 @@
 #include <sys/wait.h>  // wait のため
 #include "mysystem.h"  // インタフェース
 
-char *execpath = "/bin/sh";
-
 // system関数のクローン
 int mysystem(char *command) {
   int status = 0;
+  char *execpath = "/bin/sh";
 
   if (command == NULL) {
-    perror(command);
     return 1;
   }
 
@@ -29,7 +27,6 @@ int mysystem(char *command) {
     while (wait(&status) != pid);
   } else {        // 子プロセス
     execl(execpath, "sh", "-c", command, NULL);
-    perror(execpath);
     exit(127);
   }
 
@@ -86,5 +83,14 @@ retval = 00007f00
 system:
 sh: hoge: command not found
 retval = 00007f00
+
+
+% ./mysysmain mkdir
+mysystem:
+usage: mkdir [-pv] [-m mode] directory_name ...
+retval = 00004000
+system:
+usage: mkdir [-pv] [-m mode] directory_name ...
+retval = 00004000
 
 */
